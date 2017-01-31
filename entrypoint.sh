@@ -3,4 +3,6 @@ if [ ! -e /airflow/initialized ]; then
 	> /airflow/initialized
 	airflow initdb
 fi
-airflow webserver -p 8080
+
+airflow webserver -p 8080 &
+airflow scheduler &>/dev/null
