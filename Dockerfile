@@ -13,13 +13,10 @@ RUN apk update \
   && apk del build-deps
 
 # install airflow
-RUN pip install --no-cache-dir "airflow[postgres, s3]"   	
-# VOLUME /airflow
+RUN apk add --no-cache libffi-dev
+RUN pip install --no-cache-dir "airflow[postgres, s3, crypto]"   	
 
-ENV AIRFLOW__CORE__AIRFLOW_HOME=/airflow
-ENV AIRFLOW__CORE__DAGS_FOLDER=/airflow/dags
-ENV AIRFLOW__CORE__BASE_LOG_FOLDER=/airflow/logs
-ENV AIRFLOW__CORE__PLUGINS_FOLDER=/airflow/plugins
+ENV AIRFLOW_HOME=/airflow
 ENV AIRFLOW__CORE__EXECUTOR=LocalExecutor
 ENV AIRFLOW__CORE__SQL_ALCHEMY_CONN='postgresql+psycopg2://daniel:test2017@daniel-etl-test.cj47fhv1c2st.eu-west-1.rds.amazonaws.com:5432/airflowdb'
 ENV AIRFLOW__CORE__LOAD_EXAMPLES=False
